@@ -14,7 +14,7 @@ app.use(morgan('combined'));
 app.use(bodyparser.json());
 app.use('/mdb', express.static(__dirname+'/public/mdb/'));
 app.use('/public', express.static(__dirname+'/public'));
-app.set('view engine', 'jade');
+app.set('view engine', 'pug');
 
 /**
  * Global Server variables
@@ -109,11 +109,8 @@ app.route('/log')
 
 
 app.route('/setup')
-  .all((request, response, next) => {
-    if(configuredServer)
-      response.status('404').send('Server has already been setup');
-}).get((request, response) => {
-    response.render('/public/views/setup.pug');
+  .get((request, response) => {
+    response.render('setup.pug');
 }).post((request, response) => {
     /** TODO store configuration information */
     configuredServer = true;
@@ -144,7 +141,7 @@ app.param('applog',
 
 app.route('/')
   .get((request, response) => {
-    response.render('/public/views/login.pug');
+    response.render('login.pug');
 }).post((request, response) => {
 
 });
@@ -158,12 +155,12 @@ app.all('*',
 
 app.route('/dashboard/:applog')
   .get((request, response) => {
-   response.render('/public/views/dashboard.pug')
+   response.render('dashboard.pug')
 });
 
 app.route('/settings')
   .get((request, response) => {
-    response.render('/public/views/settings.pug');
+    response.render('settings.pug');
 });
 
 

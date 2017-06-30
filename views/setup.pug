@@ -1,0 +1,21 @@
+extends navbar
+
+block pagebody
+    div.container(style="max-width:50%; padding-top: 3%")
+        div.card
+            div.card-block
+                div.form-header.stylish-color
+                    h1
+                        i.fa.fa-cogs.fa-lg
+                        |  Configuration
+                form#configform(method="post" action="/setup" role="form")
+                div.md-form.form-group
+                    i.fa.fa-database.prefix
+                    input.form-control#dbconnstring(type="text" required=true name="dbconnstring" value=dbconnstring form="configform")
+                    label(for="dbconnstring") CouchDB Database Connection String
+                div.md-form.form-group
+                    i.fa.fa-address-book.prefix
+                    input.form-control#userstorestring(type="text" required=true name="userstorestring" value=userstorestring form="configform")
+                    label(for="userstorestring") CouchDB User Store String
+                div.text-center.mt-2
+                    button.btn.btn-outline-primary.waves-effect.waves-light(role="button" form="configform") Configure
