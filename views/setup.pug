@@ -10,12 +10,16 @@ block pagebody
                         |  Configuration
                 form#configform(method="post" action="/setup" role="form")
                 div.md-form.form-group
+                    i.fa.fa-group.prefix
+                    input.form-control#team(type="text" required=true name="teamname" value=teamname form="configform")
+                    label(for="team") Team Name
+                div.md-form.form-group
                     i.fa.fa-database.prefix
-                    input.form-control#dbconnstring(type="text" required=true name="dbconnstring" value=dbconnstring form="configform")
+                    input.form-control#dbconnstring(type="text" required=true name="dbconn" value=dbconn form="configform")
                     label(for="dbconnstring") CouchDB Database Connection String
                 div.md-form.form-group
                     i.fa.fa-address-book.prefix
-                    input.form-control#userstorestring(type="text" required=true name="userstorestring" value=userstorestring form="configform")
+                    input.form-control#userstorestring(type="text" required=true name="userstore" value=userstore form="configform")
                     label(for="userstorestring") CouchDB User Store String
                 div.text-center.mt-2
                     button.btn.btn-outline-primary.waves-effect.waves-light(role="button" form="configform") Configure

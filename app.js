@@ -12,6 +12,7 @@ const pouchdb = require('pouchdb');
 let app = express();
 app.use(morgan('combined'));
 app.use(bodyparser.json());
+app.use(bodyparser.urlencoded({extended:true}));
 app.use('/mdb', express.static(__dirname+'/public/mdb/'));
 app.use('/public', express.static(__dirname+'/public'));
 app.set('view engine', 'pug');
@@ -22,8 +23,9 @@ app.set('view engine', 'pug');
 let configuredServer = true;
 let database_url = '';
 let user_store = '';
+let team_name = '';
 
-let hawkeyedb = new pouchdb(database_url);
+let hawkeyedb;
 
 
 
@@ -113,6 +115,10 @@ app.route('/setup')
     response.render('setup.pug');
 }).post((request, response) => {
     /** TODO store configuration information */
+    database_url = request.body.dbconn;
+    user_store = request.body.userstore;
+    team_name = request.body.teamname;
+    hawkeyedb = new pouchdb(database_url);
     configuredServer = true;
     response.redirect('/');
 });
@@ -129,7 +135,6 @@ app.all('*',
 
 app.param('applog',
   (request, response, next, applog) => {
-    console.log(applog);
     return hawkeyedb.get(applog).then((logdoc) => {
       request.logdoc = logdoc;
       return next();
